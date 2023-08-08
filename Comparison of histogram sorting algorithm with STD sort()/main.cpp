@@ -13,7 +13,7 @@ struct SortResult;
 vector<uint64_t> RandomGenerator(SortResult sample);
 vector<uint64_t> sortbyhisto(vector<uint64_t> &V1, SortResult& testCase);
 void print_me(vector<uint64_t> V1);
-SortResult Dafunc(uint64_t elemCount,uint64_t highestNumber);
+SortResult SortStuff(uint64_t elemCount,uint64_t highestNumber);
 
 
 
@@ -24,7 +24,7 @@ int main() {
     {
         for (uint64_t maxNumber = 1; maxNumber < 10000000; maxNumber*= 10)
         {
-            resultTable.push_back(Dafunc(elementCount, maxNumber));
+            resultTable.push_back(SortStuff(elementCount, maxNumber));
         }
 
     }
@@ -82,7 +82,7 @@ void print_me(vector<uint64_t> V1) {
 
 
 
-SortResult Dafunc(uint64_t elemCount,uint64_t highestNumber)
+SortResult SortStuff(uint64_t elemCount,uint64_t highestNumber)
 {
 
     SortResult hello;
