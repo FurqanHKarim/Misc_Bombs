@@ -56,22 +56,9 @@ public:
 
 int main() {
     BinaryTree hello(7);
-    hello.insersion(5);
-    hello.insersion(12);
-    hello.insersion(11);
-    hello.insersion(19);
-    hello.insersion(13);
-    hello.insersion(12.5);
-    hello.insersion(12.7);
-    hello.insersion(14);
-    hello.insersion(25);
-    hello.insersion(6);
-    hello.insersion(4);
-    hello.insersion(2);
-    hello.insersion(11.5);
-
+    
     hello.preOrderVisit();
-    hello.remove(4);
+    hello.remove(7);
   //  Node* wut = hello.getshortest(hello.search(12));
 
 
@@ -115,12 +102,21 @@ double BinaryTree:: getshortest(Node* &sample)
 void BinaryTree:: remove(double value)
 {
     Node* temp = this->DaNode;
+
+    
     temp = search(value);
+    
     if (temp == nullptr)
     {
         return;
     }
 
+    if(temp == DaNode){
+        delete DaNode;
+        DaNode = nullptr;
+        return;
+    }
+    
     if(temp->R_Next == nullptr){
         Node* temp1 = temp->L_Next;
         if(temp1 == nullptr)
@@ -156,7 +152,6 @@ void BinaryTree:: remove(double value)
 
 Node* leftRotate(Node* &temp){
     Node* inter = temp;
-
 }
 
 
@@ -196,6 +191,7 @@ Node* BinaryTree:: search(double sample){
     Node* inter;
     Node* edge_case;
     inter = DaNode;
+    edge_case= DaNode;
     while(1){
         if(inter==nullptr){
             cout << "sample not found" << endl;
