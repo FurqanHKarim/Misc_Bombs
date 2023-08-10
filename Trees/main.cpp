@@ -55,13 +55,22 @@ public:
 
 
 int main() {
-    BinaryTree hello(7);
+    BinaryTree hello(8);
+    hello.insersion(5);
+    hello.insersion(12);
+    hello.insersion(4);
+    hello.insersion(6);
+    hello.insersion(11);
+    hello.insersion(10);
+    hello.insersion(7);
+    
+
     
     hello.preOrderVisit();
-    hello.remove(7);
+    hello.remove(12);
   //  Node* wut = hello.getshortest(hello.search(12));
 
-
+    
     hello.preOrderVisit();
     
     hello.search(88);
