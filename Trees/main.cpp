@@ -46,10 +46,10 @@ public:
     BinaryTree(double _Value);
     void insersion(double _Value); 
     void preOrderVisit();
-    Node* search(int sample);
-    Node* searchparent(int sample);
+    Node* search(double sample);
+    Node* searchparent(double sample);
     Node* leftRotate(Node* &temp);
-    void remove(int value);
+    void remove(double value);
 };
 
 
@@ -68,7 +68,10 @@ int main() {
     hello.insersion(6);
     hello.insersion(4);
     hello.insersion(2);
-    hello.remove(2);
+    hello.insersion(11.5);
+
+    hello.preOrderVisit();
+    hello.remove(4);
   //  Node* wut = hello.getshortest(hello.search(12));
 
 
@@ -109,7 +112,7 @@ double BinaryTree:: getshortest(Node* &sample)
 
 }
 
-void BinaryTree:: remove(int value)
+void BinaryTree:: remove(double value)
 {
     Node* temp = this->DaNode;
     temp = search(value);
@@ -137,9 +140,14 @@ void BinaryTree:: remove(int value)
         temp->L_Next = temp1->L_Next;
         temp->R_Next = temp1->R_Next;
         temp->current_color = temp1->current_color;
-        temp->depth = temp1->depth;
         temp->Value = temp1->Value;
         delete temp1;
+        return;
+    }
+
+    if(temp->R_Next->Value == value){
+        delete temp->R_Next;
+        temp->R_Next = nullptr;
         return;
     }
     temp->Value = getshortest(temp->R_Next);
@@ -157,7 +165,7 @@ Node* leftRotate(Node* &temp){
 
 
  
-Node* BinaryTree:: searchparent(int sample){
+Node* BinaryTree:: searchparent(double sample){
     Node* inter;
     Node* parent_iter;
     inter = DaNode;
@@ -184,7 +192,7 @@ Node* BinaryTree:: searchparent(int sample){
 }
 
 
-Node* BinaryTree:: search(int sample){
+Node* BinaryTree:: search(double sample){
     Node* inter;
     Node* edge_case;
     inter = DaNode;

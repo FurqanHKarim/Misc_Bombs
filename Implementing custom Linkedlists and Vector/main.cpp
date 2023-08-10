@@ -96,9 +96,26 @@ void bharlo(int* leh) {
 
 
 
+list<int> func(list<int> L1, list<int>L2){
+    list<int> hello;
+    list<int>::iterator iterL2 = L2.begin();
+    list<int>::iterator iterL1 = L1.begin();
+    L1.sort();
+    L2.sort();
+
+    int iteration;
+    if(L1.size()<L2.size()){
+        iteration = L2.size();
+    }else{
+        iteration = L1.size();
+    }
+    
+   
+}
 
 
 int main() {
+
 
 }
 
