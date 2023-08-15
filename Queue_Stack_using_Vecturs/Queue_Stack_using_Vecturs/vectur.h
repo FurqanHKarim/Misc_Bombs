@@ -17,7 +17,8 @@ public:
     vectur(T input);
     T* get_head_ref();
     void pushback(T inter);
-    void poptop();
+    void pushtop(T inter);
+    void pop();
     void resize();
     T get(T const a);
     void printVector();
@@ -43,10 +44,10 @@ void vectur<T>::resize() {
     {
         temp[i] = array[i];
     }
-    delete array;
-    array = temp;
+    delete [] array;
     capacity++;
     capacity *= 2;
+    array = temp;
 }
 
 template<class T>
@@ -66,28 +67,37 @@ void vectur<T>::pushback(T inter) {
 }
 
 template<class T>
-void vectur<T>::poptop() {
+void vectur<T>::pushtop(T inter) {
 
-    if (size == 0) {
-        cout << "EMPTY: " << endl;
-        return;
+
+    if (capacity == size) {
+        resize();
     }
-    size--;
-    capacity--;
-    T* temp;
-    temp = new T[capacity];
-    for (int i = 1; i < size+1; i++)
+
+    size++;
+    for (int i = 0; i < size; i++)
     {
-        temp[i-1] = array[i];
+        array[size - i] = array[size - 2];
     }
+    array[0] = inter;
+    return;
 
-    delete array;
-    array = temp;
 }
+
+
 
 template<class T>
 T vectur<T>::get(T const a) {
-    return array[a];
+    if (a > size)
+    {
+        cout << "Out of Bounds: \n";
+        return 0;
+    }
+    else {
+        return array[a];
+
+    }
+    
 }
 
 template <class T>
@@ -109,5 +119,20 @@ template <class T>
 int vectur<T>::get_capacity() {
     return this->capacity;
 }
+
+
+template<class T> 
+void vectur<T>::pop() {
+    if (size == 0) {
+        cout << "Empty :";
+        return;
+    }
+
+    this->array[size - 1] = NULL;
+    size--;
+    return ;
+}
+
+
 
 #endif // !vectar
