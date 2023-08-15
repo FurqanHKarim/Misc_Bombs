@@ -1,84 +1,97 @@
 #include<iostream>
+#include "stack.hpp"
 using namespace std;
 
+template <typename T>
 struct Node{
-    int value;
+    T value;
     Node* next;
 
     Node();
-    Node(int const &_value);
+    Node(T const &_value);
 };
 
+template <typename T>
 class Stack{
     private: 
-    Node* head;
-    Node* tail;
+    Node<T>* head;
+    Node<T>* tail;
 
     public:
     Stack();
-    Stack(int &_Value);
-    void push(int const &_Value);
-    int pop();
+    Stack(T &_Value);
+    void push(T const &_Value);
+    void pop();
 };
 
-Stack:: Stack(){
+template <typename T>
+class MyQueue{
+private:
+    Node<T>* DaBoi;
+    Node<T>* Tail;
+
+public:
+    MyQueue();
+    MyQueue(T const &_value);
+    void push(T const &_value);
+    void pop();
+
+};
+
+template <typename T>
+Node<T>:: Node() : next(nullptr){
+}
+
+template <typename T>
+Node<T>:: Node(T const &_value): value(_value), next(nullptr){
+}
+
+template <typename T>
+Stack<T>:: Stack(){
     this->head = nullptr;
 }
-Stack:: Stack(int &_Value){
+
+template <typename T>
+Stack<T>:: Stack(T &_Value){
     head = new Node(_Value);
 }
-Node:: Node(){
 
-}
-Node:: Node(int const &_value){
-        
-    value = _value;
-    next = nullptr;
-
-}
-void Stack:: push(int const &_Value){
-    Node* temp = new Node(_Value);
+template <typename T>
+void Stack<T>:: push(T const &_Value){
+    Node<T>* temp = new Node(_Value);
     temp->next = this->head;
     this->head = temp;
     return;
 }
-int Stack:: pop(){
+
+template <typename T>
+void Stack<T>:: pop(){
     if(this->head == nullptr)
-        return 0;
+        return;
     
-    int inter = 0;
-    Node* temp = this->head;
-    inter = temp->value;
+    Node<T>* temp = this->head;
     this->head = temp->next;
     delete temp;
-    return inter;
+    return;
 }
 
-class MyQueue{
-private:
-    Node* DaBoi;
-    Node* Tail;
 
-public:
-    MyQueue();
-    MyQueue(int const &_value);
-    void push(int const &_value);
-    int pop();
-
-};
-
-MyQueue:: MyQueue(){
+template <typename T>
+MyQueue<T>:: MyQueue(){
     DaBoi = nullptr;
     Tail = nullptr;
 }
 
-MyQueue:: MyQueue(int const &_value){
+
+template <typename T>
+MyQueue<T>:: MyQueue(T const &_value){
     DaBoi = new Node(_value);
     Tail = DaBoi;
 }
 
-void MyQueue:: push(int const &_value){
-    Node* new_boi = new Node(_value);
+template <typename T>
+void MyQueue<T>:: push(T const &_value){
+    Node<T>* new_boi = new Node(_value);
 
     if(this->Tail == nullptr){
         this->Tail = new_boi;
@@ -90,27 +103,32 @@ void MyQueue:: push(int const &_value){
     return;
 }
 
-int MyQueue:: pop(){
-    int inter;
-    Node* temp = this->DaBoi;
+
+template <typename T>
+void MyQueue<T>:: pop(){
+    Node<T>* temp = this->DaBoi;
     if(this->DaBoi == nullptr){
-        return 0;
+        cout<<"Queue Empty: \n";
+        return ;
     }
 
     if(this->DaBoi == this->Tail){
-        inter = this->DaBoi->value;
         this->DaBoi = nullptr;
         this->Tail = nullptr;
         delete temp;
-        return inter;
+        return;
     }
 
     
-    inter = this->DaBoi->value;
     this->DaBoi = this->DaBoi->next;
     delete temp;
-    return inter;
+    return;
 }
+
+
+
+
+
 
 
 
@@ -123,16 +141,16 @@ int main(){
     hello.push(50);
     hello.push(40);
 
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
-    cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
+    // cout<<hello.pop()<<endl;
 
 
 }
