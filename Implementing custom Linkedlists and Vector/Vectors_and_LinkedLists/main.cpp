@@ -10,7 +10,7 @@
 
 using namespace std;
 
-struct Node; 
+struct Node;
 class vectur;
 class linkedList;
 void bharlo(int* leh);
@@ -18,7 +18,7 @@ void bharlo(int* leh);
 
 class vectur {
 private:
-    int *array;
+    int* array;
     int capacity;
     int size;
 
@@ -29,7 +29,7 @@ public:
     void resize();
     int get(int a);
     void printVector();
-    
+
 };
 
 struct Node {
@@ -42,7 +42,7 @@ struct Node {
 };
 
 
-class linkedList{
+class linkedList {
     Node* list;
 public:
 
@@ -64,7 +64,7 @@ public:
         while (temp->next != NULL) {
             temp = temp->next;
         }
-        
+
         Node* new_bacha;
         new_bacha = new Node;
         new_bacha->integer = alpha;
@@ -96,7 +96,7 @@ void bharlo(int* leh) {
 
 
 
-list<int> func(list<int> L1, list<int>L2){
+list<int> func(list<int> L1, list<int>L2) {
     list<int> hello;
     list<int>::iterator iterL2 = L2.begin();
     list<int>::iterator iterL1 = L1.begin();
@@ -104,13 +104,14 @@ list<int> func(list<int> L1, list<int>L2){
     L2.sort();
 
     int iteration;
-    if(L1.size()<L2.size()){
+    if (L1.size() < L2.size()) {
         iteration = L2.size();
-    }else{
+    }
+    else {
         iteration = L1.size();
     }
-    
-   
+
+
 }
 
 
@@ -119,21 +120,21 @@ int main() {
 
 }
 
-vectur:: vectur(){
+vectur::vectur() {
     array = NULL;
     capacity = 0;
     size = 0;
 }
 
-vectur:: vectur(int input){
+vectur::vectur(int input) {
     array = new int[1];
     *array = input;
     capacity = 1;
     size = 1;
 }
 
-void vectur::  resize() {
-    int* temp = new int[(capacity+1)];
+void vectur::resize() {
+    int* temp = new int[(capacity + 1)];
     for (int i = 0; i < capacity; i++)
     {
         temp[i] = array[i];
@@ -143,7 +144,7 @@ void vectur::  resize() {
     capacity += 1;
 }
 
-void vectur:: pushback(int inter) {
+void vectur::pushback(int inter) {
 
     if (size == capacity) {
         resize();
@@ -151,17 +152,17 @@ void vectur:: pushback(int inter) {
 
     array[size] = inter;
     size++;
-    
+
 }
 
-int vectur:: get(int a) {
+int vectur::get(int a) {
     return array[a];
 }
 
-void vectur:: printVector() {
+void vectur::printVector() {
     for (int i = 0; i < size; i++)
     {
-        cout << array[i]<<endl;
+        cout << array[i] << endl;
     }
 }
 
