@@ -3,11 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <fstream>
-#include <array>
-#include <list>
-#include<vector>
-#include<chrono>
+#include <chrono>
 #include <algorithm>    // std::sort
 using namespace std;
 
@@ -21,6 +17,9 @@ private:
 public:
     vectur();
     vectur(T input);
+    ~vectur();
+    vectur(vectur& B);
+    vectur<T>& operator= (const vectur& B);
     T* get_head_ref();
     void pushback(T inter);
     void pushtop(T inter);
@@ -44,13 +43,46 @@ vectur<T>::vectur(T input) : capacity(1), size(1) {
 }
 
 template<class T>
+vectur<T>:: ~vectur(){
+    delete this->array;
+
+}
+
+template<class T>
+vectur<T>& vectur<T>::operator= (const vectur<T>& B) {
+    delete this->array;
+    this->array = new T[B.capacity];
+    this->capacity = B.capacity;
+    this->size = B.size;
+    for (size_t i = 0; i < capacity; i++)
+    {   
+        this->array[i] = B.array[i];
+
+    }
+    return *this;
+}
+
+template<class T>
+vectur<T>::vectur(vectur<T>& B) {
+    delete this->array;
+    this->array = new T[B.capacity];
+    this->capacity = B.capacity;
+    this->size = B.size;
+
+    for (size_t i = 0; i < capacity; i++)   
+    {
+        this->array[i] = B.array[i];
+    }
+}
+
+template<class T>
 void vectur<T>::resize() {
     T* temp = new T[(capacity + 1) * 2];
-    for (int i = 0; i < capacity; i++)
+    for (size_t i = 0; i < capacity; i++)
     {
         temp[i] = array[i];
     }
-    delete[] array;
+    delete array;
     capacity++;
     capacity *= 2;
     array = temp;
@@ -84,7 +116,7 @@ void vectur<T>::pushtop(T inter) {
     }
 
     size++;
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         array[size - i] = array[size - 2];
     }
@@ -110,7 +142,7 @@ T vectur<T>::get(T const a) {
 
 template <class T>
 void vectur<T>::printVector() {
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         cout << array[i] << endl;
     }
