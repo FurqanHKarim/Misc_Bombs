@@ -8,52 +8,33 @@ using namespace std;
 int main() {
 
 	Stack<int> wut;
+	Stack<int> ohkay;
 	wut.push(90);
-	cout<<wut.peek();
 	wut.push(80);
-	cout<<wut.peek();
 	wut.push(60);
-	cout<<wut.peek();
 	wut.push(50);
-	cout<<wut.peek();
 	wut.push(40);
-	cout<<wut.peek();
 	wut.push(30);
-	cout<<wut.peek();
 	wut.push(60);
-	cout<<wut.peek();
 	wut.push(50);
-	cout<<wut.peek();
 	wut.push(40);
-	cout<<wut.peek();
 	wut.push(30);
 
+	ohkay = wut;
+
 	wut.pop();
-	cout << wut.peek();
+	wut.peek(); 
 	wut.pop();
-	cout << wut.peek();
+	wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
 	wut.pop();
-	cout << wut.peek();
-	wut.pop();
-	cout << wut.peek();
-	wut.pop();
-	cout << wut.peek();
-	wut.pop();
-	cout << wut.peek();
+
 	
 
 	
