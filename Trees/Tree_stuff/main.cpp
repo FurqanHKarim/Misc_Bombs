@@ -6,7 +6,27 @@ using namespace std;
 
 void check_neighbour(MyQueue<Node*>& inter);
 
-void printme(BinaryTree &sent) {
+void printMeDepth(BinaryTree& sent) {
+    Stack<Node*> stack(sent.getRoot());
+    do {
+        if (stack.peek()->L_Next != nullptr)
+        {
+            stack.push(stack.peek()->L_Next);
+        }
+        else if (stack.peek()->R_Next != nullptr)
+        {
+            stack.push(stack.peek()->R_Next);
+        }
+        else
+        {
+            cout << stack.peek()->Value;
+            stack.pop();
+        }
+
+    } while (stack.getSize());
+}
+
+void printMeBreath(BinaryTree &sent) {
     MyQueue<Node*> ohkay;
     ohkay = sent.getRoot();
     do
@@ -39,26 +59,24 @@ void check_neighbour(MyQueue<Node*> &inter) {
 
 
 int main() {
-   /* MyQueue<int> wut;
-    wut.push(90);
-    cout << wut.peek() << endl;
-    wut.push(80);
-    cout << wut.peek() << endl;
-    wut.push(70);
-    cout << wut.peek() << endl;
-    wut.push(60);
-    cout << wut.peek() << endl;
-    wut.push(50);
-    wut.pop();
-    cout << wut.peek() << endl;
-    wut.pop();
-    cout << wut.peek() << endl;
-    wut.push(40);
-    cout << wut.peek() << endl;
-
-    wut.push(30);
-    cout << wut.peek() << endl;*/
-
+  
+    Stack<int> hel(4);
+    hel.push(5);
+    hel.push(6);
+    hel.push(7);
+    hel.push(8);
+    hel.push(9);
+    hel.push(10);
+    hel.push(11);
+    hel.push(12);
+    hel.push(13);
+    hel.push(14);
+    hel.pop();
+    cout<<hel.peek();
+    hel.pop();
+    cout << hel.peek();
+    hel.pop();
+    cout << hel.peek();
 
     BinaryTree hello(4);
     hello.insersion(2);
@@ -68,7 +86,7 @@ int main() {
     hello.insersion(5);
     hello.insersion(7);
     //hello.preOrderVisit();
-    printme(hello);
+    printMeDepth(hello);
 
     
 

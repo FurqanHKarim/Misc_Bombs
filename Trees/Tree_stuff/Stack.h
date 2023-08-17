@@ -10,6 +10,7 @@ private:
 public:
     Stack();
     Stack(T _Value);
+    int getSize();
     void push(T const _Value);
     void pop();
     T peek();
@@ -21,6 +22,11 @@ Stack<T>::Stack() {}
 template<class T>
 Stack<T>::Stack(T _Value) {
     halo.pushback(_Value);
+}
+
+template<class T>
+int Stack<T>::getSize() {
+    return halo.get_size();
 }
 
 template<class T>
