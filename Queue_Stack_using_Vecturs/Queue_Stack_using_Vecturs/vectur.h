@@ -25,10 +25,12 @@ public:
     void pushtop(T inter);
     void pop();
     void resize();
-    T get(T const a);
+    T get(int a);
     void printVector();
     int get_size();
     int get_capacity();
+
+
 
 };
 
@@ -116,9 +118,9 @@ void vectur<T>::pushtop(T inter) {
     }
 
     size++;
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = size-1 ; i >= 1; i--)
     {
-        array[size - i] = array[size - 2];
+        array[i] = array[i-1];
     }
     array[0] = inter;
     return;
@@ -127,13 +129,14 @@ void vectur<T>::pushtop(T inter) {
 
 
 template<class T>
-T vectur<T>::get(T const a) {
+T vectur<T>::get(int a) {
     if (a > size)
     {
         cout << "Out of Bounds: \n";
         return 0;
     }
-    else {
+    else 
+    {
         return array[a];
 
     }

@@ -29,8 +29,9 @@ void check_neighbour(MyQueue<Node*> &inter) {
 
     if (inter.peek()->R_Next != nullptr)
     {
-        inter.push(inter.peek()->L_Next);
+        inter.push(inter.peek()->R_Next);
     }
+
 
 }
 
@@ -38,6 +39,27 @@ void check_neighbour(MyQueue<Node*> &inter) {
 
 
 int main() {
+   /* MyQueue<int> wut;
+    wut.push(90);
+    cout << wut.peek() << endl;
+    wut.push(80);
+    cout << wut.peek() << endl;
+    wut.push(70);
+    cout << wut.peek() << endl;
+    wut.push(60);
+    cout << wut.peek() << endl;
+    wut.push(50);
+    wut.pop();
+    cout << wut.peek() << endl;
+    wut.pop();
+    cout << wut.peek() << endl;
+    wut.push(40);
+    cout << wut.peek() << endl;
+
+    wut.push(30);
+    cout << wut.peek() << endl;*/
+
+
     BinaryTree hello(4);
     hello.insersion(2);
     hello.insersion(6);
@@ -45,7 +67,7 @@ int main() {
     hello.insersion(3);
     hello.insersion(5);
     hello.insersion(7);
-    hello.preOrderVisit();
+    //hello.preOrderVisit();
     printme(hello);
 
     

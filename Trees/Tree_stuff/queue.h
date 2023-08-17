@@ -71,7 +71,7 @@ MyQueue<T>::MyQueue(T const _value)
 template<class T>
 void MyQueue<T>::push(T const _value)
 {
-	this->DaBoi.pushback(_value);
+	this->DaBoi.pushtop(_value);
 	this->Head = this->DaBoi.get_head_ref();
 	//this->Tail = (this->DaBoi.get_head_ref() + this->DaBoi.get_size() - 1);
 	return;
@@ -113,7 +113,7 @@ T MyQueue<T>::peek() {
 	//if (this->DaBoi.array == nullptr)
 	//	return NULL;
 
-	return this->DaBoi.get(0);
+	return this->DaBoi.get(this->DaBoi.get_size()-1);
 }
 
 
