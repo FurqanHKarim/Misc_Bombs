@@ -270,8 +270,8 @@ void BinaryTree::preOrderPrint(Node* boi) {
     }
 
     preOrderPrint(boi->L_Next);
-    cout << boi->Value << endl;
     preOrderPrint(boi->R_Next);
+    cout << boi->Value << endl;
 }
 
 

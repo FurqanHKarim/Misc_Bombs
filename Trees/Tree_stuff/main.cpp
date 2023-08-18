@@ -5,25 +5,101 @@
 using namespace std;
 
 void check_neighbour(MyQueue<Node*>& inter);
+void printstack(Stack<Node*>& hello);
 
-void printMeDepth(BinaryTree& sent) {
+void printMeDepthPreorder(BinaryTree& sent) {
     Stack<Node*> stack(sent.getRoot());
+    cout << endl;   
     do {
-        if (stack.peek()->L_Next != nullptr)
+
+        Node* inter = stack.peek();
+        cout << inter->Value << endl;
+        stack.pop();
+
+        if (inter->R_Next != nullptr)
         {
-            stack.push(stack.peek()->L_Next);
+            stack.push(inter->R_Next);
         }
-        else if (stack.peek()->R_Next != nullptr)
+
+        if (inter->L_Next != nullptr)
         {
-            stack.push(stack.peek()->R_Next);
-        }
-        else
-        {
-            cout << stack.peek()->Value;
-            stack.pop();
+            stack.push(inter->L_Next);
         }
 
     } while (stack.getSize());
+}
+
+void printMeInorder(BinaryTree& sent) {
+    Stack<Node*> stack(sent.getRoot());
+    cout << endl;
+    Node* inter = stack.peek();
+    while(stack.getSize())
+    {
+        if (stack.peek()->L_Next != nullptr)
+        {
+            stack.push(stack.peek()->L_Next);
+            printstack(stack);
+            continue;
+
+        }
+       
+        cout << stack.peek()->Value<<endl;
+        inter = stack.peek();
+        printstack(stack);
+        stack.pop();
+        printstack(stack);
+
+        if (inter->R_Next != nullptr)
+        {   
+            stack.push(inter->R_Next);
+            printstack(stack);
+
+            continue;
+
+        }
+
+        if (stack.getSize() == 0)
+            return;
+
+
+        if(stack.peek()->R_Next != nullptr)
+        {
+            cout << stack.peek()->Value << endl;
+            inter = stack.peek();
+            printstack(stack);
+            stack.pop();
+            printstack(stack);
+            stack.push(inter->R_Next);
+            printstack(stack);
+        }
+        else 
+        {
+            cout << stack.peek()->Value << endl;
+            stack.pop();
+            printstack(stack);
+            stack.push(inter->R_Next);
+            continue;
+            printstack(stack);
+            inter = stack.peek();
+            cout << stack.peek()->Value << endl;
+            stack.pop();
+
+            continue;
+        }
+        stack.pop();
+        inter = stack.peek();
+    }
+}
+void printstack(Stack<Node*>& hello) {
+    Stack<Node*> wut(hello);
+    cout << "printing stack :";
+    while (wut.getSize()) {
+        cout << wut.peek()->Value << "  ";
+        wut.pop();
+    }
+    cout << endl;
+    return;
+    
 }
 
 void printMeBreath(BinaryTree &sent) {
@@ -60,49 +136,17 @@ void check_neighbour(MyQueue<Node*> &inter) {
 
 int main() {
   
-    Stack<int> hel(4);
-    hel.push(5);
-    hel.push(6);
-    hel.push(7);
-    hel.push(8);
-    hel.push(9);
-    hel.push(10);
-    hel.push(11);
-    hel.push(12);
-    hel.push(13);
-    hel.push(14);
-    hel.pop();
-    cout<<hel.peek();
-    hel.pop();
-    cout << hel.peek();
-    hel.pop();
-    cout << hel.peek();
-
     BinaryTree hello(4);
     hello.insersion(2);
     hello.insersion(6);
-    hello.insersion(1);
-    hello.insersion(3);
     hello.insersion(5);
     hello.insersion(7);
-    //hello.preOrderVisit();
-    printMeDepth(hello);
-
-    
-
-
-
-
-
-
+    hello.insersion(1);
+    //hello.insersion(3);
+    hello.insersion(1.5);
     hello.preOrderVisit();
-    hello.remove(12);
-    //  Node* wut = hello.getshortest(hello.search(12));
-
-
-    hello.preOrderVisit();
-
-    hello.search(88);
+    printMeDepthPreorder(hello);
+    printMeInorder(hello);
 
     cout << "Done :  " << endl;
 
