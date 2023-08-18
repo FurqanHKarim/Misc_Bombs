@@ -78,7 +78,7 @@ void printMeInorder(BinaryTree& sent) {
             stack.pop();
             printstack(stack);
             stack.push(inter->R_Next);
-            continue;
+
             printstack(stack);
             inter = stack.peek();
             cout << stack.peek()->Value << endl;
