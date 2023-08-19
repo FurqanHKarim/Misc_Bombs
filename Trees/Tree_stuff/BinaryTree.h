@@ -1,6 +1,8 @@
 #ifndef TREE
 #define TREE
 #include<iostream>
+#include "queue.h"
+#include "Stack.h"
 using namespace std;
 
 enum class Color { Red, Black };
@@ -31,9 +33,12 @@ public:
     void preOrderVisit();
     Node* search(double sample);
     Node* searchparent(double sample);
-    Node* leftRotate(Node*& temp);
     void remove(double value);
     Node* getRoot();
+    void printMeBreath();
+    void check_neighbour(MyQueue<Node*>& inter);
+    void printMeDepthPreorder();
+    void printMeInorder();
 };
 
 
@@ -44,6 +49,8 @@ Node:: Node() {
     current_color = Color::Red;
 }
 
+
+
 Node:: Node(double _Value) {
     Value = _Value;
     R_Next = nullptr;
@@ -51,6 +58,8 @@ Node:: Node(double _Value) {
     depth = 0;
     current_color = Color::Red;
 }
+
+
 
 double BinaryTree::getshortest(Node*& sample)
 {
@@ -77,6 +86,8 @@ double BinaryTree::getshortest(Node*& sample)
 
 
 }
+
+
 
 void BinaryTree::remove(double value)
 {
@@ -128,9 +139,7 @@ void BinaryTree::remove(double value)
     temp->Value = getshortest(temp->R_Next);
 }
 
-//Node* leftRotate(Node*& temp) {
-//    Node* inter = temp;
-//}
+
 
 Node* BinaryTree::searchparent(double sample) {
     Node* inter;
@@ -158,6 +167,8 @@ Node* BinaryTree::searchparent(double sample) {
         }
     }
 }
+
+
 
 Node* BinaryTree::search(double sample) {
     Node* inter;
@@ -192,15 +203,21 @@ Node* BinaryTree::search(double sample) {
     }
 }
 
+
+
 BinaryTree::BinaryTree() {
     DaNode = nullptr;
     max_depth = 0;
 }
 
+
+
 BinaryTree::BinaryTree(double _Value) {
     max_depth = 0;
     DaNode = new Node(_Value);
 }
+
+
 
 void BinaryTree::insersion(double _Value)
 {
@@ -258,9 +275,13 @@ void BinaryTree::insersion(double _Value)
     }
 }
 
+
+
 void BinaryTree::preOrderVisit() {
     BinaryTree::preOrderPrint(DaNode);
 }
+
+
 
 void BinaryTree::preOrderPrint(Node* boi) {
 
@@ -280,5 +301,99 @@ Node* BinaryTree:: getRoot() {
     return this->DaNode;
 }
 
+
+
+void BinaryTree::printMeBreath() {
+    MyQueue<Node*> ohkay;
+    ohkay.push(this->DaNode);
+    while (ohkay.getCount())
+    {
+        this->check_neighbour(ohkay);
+        cout << ohkay.peek()->Value << endl;
+        ohkay.pop();
+
+    }
+
+}
+
+
+
+void BinaryTree::check_neighbour(MyQueue<Node*>& inter) {
+    if (inter.peek()->L_Next != nullptr)
+        inter.push(inter.peek()->L_Next);
+
+
+    if (inter.peek()->R_Next != nullptr)
+        inter.push(inter.peek()->R_Next);
+
+}
+
+
+
+void BinaryTree::printMeDepthPreorder() {
+    Stack<Node*> stack(this->DaNode);
+
+    cout << endl;
+
+    while (stack.getSize())
+    {
+
+        Node* inter = stack.peek();
+        cout << inter->Value << endl;
+        stack.pop();
+
+        if (inter->R_Next != nullptr)
+        {
+            stack.push(inter->R_Next);
+        }
+
+        if (inter->L_Next != nullptr)
+        {
+            stack.push(inter->L_Next);
+        }
+
+    }
+}
+
+
+
+void BinaryTree::printMeInorder() {
+    Stack<Node*> stack(this->DaNode);
+    cout << endl;
+    Node* inter = stack.peek();
+    while (stack.getSize())
+    {
+        if (stack.peek()->L_Next != nullptr)
+        {
+            stack.push(stack.peek()->L_Next);
+            continue;
+
+        }
+
+        cout << stack.peek()->Value << endl;
+        inter = stack.peek();
+        stack.pop();
+
+        if (inter->R_Next != nullptr)
+        {
+            stack.push(inter->R_Next);
+            continue;
+        }
+
+        if (stack.getSize() == 0)
+            return;
+
+        if (stack.peek()->R_Next == nullptr) {
+            cout << stack.peek()->Value << endl;
+            stack.pop();
+        }
+        cout << stack.peek()->Value << endl;
+        inter = stack.peek();
+        stack.pop();
+        stack.push(inter->R_Next);
+        continue;
+
+    }
+}
 
 #endif // !TREE
