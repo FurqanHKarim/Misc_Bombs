@@ -38,56 +38,33 @@ void printMeInorder(BinaryTree& sent) {
         if (stack.peek()->L_Next != nullptr)
         {
             stack.push(stack.peek()->L_Next);
-            printstack(stack);
             continue;
 
         }
        
         cout << stack.peek()->Value<<endl;
         inter = stack.peek();
-        printstack(stack);
         stack.pop();
-        printstack(stack);
 
         if (inter->R_Next != nullptr)
         {   
             stack.push(inter->R_Next);
-            printstack(stack);
-
             continue;
-
         }
 
         if (stack.getSize() == 0)
             return;
 
-
-        if(stack.peek()->R_Next != nullptr)
-        {
+        if (stack.peek()->R_Next == nullptr) {
             cout << stack.peek()->Value << endl;
-            inter = stack.peek();
-            printstack(stack);
             stack.pop();
-            printstack(stack);
-            stack.push(inter->R_Next);
-            printstack(stack);
         }
-        else 
-        {
-            cout << stack.peek()->Value << endl;
-            stack.pop();
-            printstack(stack);
-            stack.push(inter->R_Next);
-
-            printstack(stack);
-            inter = stack.peek();
-            cout << stack.peek()->Value << endl;
-            stack.pop();
-
-            continue;
-        }
-        stack.pop();
+        cout << stack.peek()->Value << endl;
         inter = stack.peek();
+        stack.pop();
+        stack.push(inter->R_Next);
+        continue;
+
     }
 }
 void printstack(Stack<Node*>& hello) {
@@ -142,8 +119,12 @@ int main() {
     hello.insersion(5);
     hello.insersion(7);
     hello.insersion(1);
-    //hello.insersion(3);
+    hello.insersion(3);
     hello.insersion(1.5);
+    hello.insersion(1.7);
+    hello.insersion(1.8);
+    hello.insersion(3.3);
+    hello.insersion(4.1);
     hello.preOrderVisit();
     printMeDepthPreorder(hello);
     printMeInorder(hello);
