@@ -126,8 +126,8 @@ int main() {
     hello.insersion(3.3);
     hello.insersion(4.1);
     hello.preOrderVisit();
-    printMeDepthPreorder(hello);
-    printMeInorder(hello);
+   // printMeDepthPreorder(hello);
+    //printMeInorder(hello);
 
     cout << "Done :  " << endl;
 
