@@ -35,7 +35,7 @@ void printMeInorder(BinaryTree& sent) {
     Node* inter = stack.peek();
     while(stack.getSize())
     {
-        if (stack.peek()->L_Next != nullptr)
+         if (stack.peek()->L_Next != nullptr)
         {
             stack.push(stack.peek()->L_Next);
             continue;
