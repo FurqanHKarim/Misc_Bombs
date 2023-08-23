@@ -2,6 +2,7 @@
 #include<vector>
 #include<unordered_map>
 #include<queue>
+#include<stack>
 using namespace std;
 
 
@@ -88,7 +89,7 @@ public:
 		
 	}
 
-	void searchNodeBFS()
+	void printBFS()
 	{
 		unordered_map<Node<T>*, bool> visited;
 		queue<Node<T>*> cur_queue;
@@ -101,6 +102,8 @@ public:
 		while (!cur_queue.empty())
 		{
 			temp = cur_queue.front();
+			cout << cur_queue.front()->value<<" ";
+			cur_queue.pop();
 			for (size_t i = 0; i < temp->neighbours.size(); i++)
 			{	
 				if(!visited[temp->neighbours[i]])
@@ -112,14 +115,35 @@ public:
 				
 
 			}
-			cout << cur_queue.front()->value<<" ";
-			cur_queue.pop();
-			
-			
 		}
+	}
 
+	void printDFS() 
+	{
+		unordered_map<Node<T>*, bool> visited;
+		stack<Node<T>*> curr_queue;
+		Node<T>* temp;
 
-		
+		visited.insert_or_assign(this->root_node_, true);
+		temp = this->root_node_;
+		curr_queue.push(temp);
+
+		while (curr_queue.size())
+		{
+			cout << curr_queue.top()->value << " ";
+			temp = curr_queue.top();
+			curr_queue.pop();
+
+			for (size_t i = 0; i < temp->neighbours.size(); i++)
+			{
+				if (!visited[temp->neighbours[i]])
+				{
+					curr_queue.push(temp->neighbours[i]);
+					visited.insert_or_assign(temp->neighbours[i], true);
+				}
+			}
+		}
+		cout << endl;
 	}
 };
 
@@ -133,7 +157,7 @@ int main() {
 	Node<int>* node_ptr5 = new Node<int>(5);
 	Node<int>* node_ptr6 = new Node<int>(5);
 	Node<int>* node_ptr7 = new Node<int>(7);
-	Node<int>* node_ptr8 = new Node<int>(8);
+	Node<int>* node_ptr8 = new Node<int>(100);
 	
 
 	
@@ -149,6 +173,7 @@ int main() {
 	node_ptr1->connectNode(node_ptr3);
 	node_ptr1->connectNode(node_ptr4);
 	node_ptr1->connectNode(hello.returnRoot());
+
 
 	node_ptr2->connectNode(node_ptr4);
 	node_ptr2->connectNode(node_ptr5);
@@ -181,11 +206,13 @@ int main() {
 	node_ptr8->connectNode(node_ptr5);
 	node_ptr8->connectNode(hello.returnRoot());
 
-	hello.searchNodeBFS();
+	hello.printDFS();
+	hello.printBFS();
 	cout << "Done   :" << endl;
 
 
 	return 0;
+
 }
 
 
