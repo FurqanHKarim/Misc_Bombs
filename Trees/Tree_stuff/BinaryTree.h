@@ -6,52 +6,206 @@
 using namespace std;
 
 enum class Color { Red, Black };
+template<class T>
 struct Node {
-    double Value;
+    T Value;
     Node* R_Next;
     Node* L_Next;
     Color current_color;
     int depth;
 
     Node();
-    Node(double _Value);
+    Node(T _Value);
 };
 
+template<class T>
 class BinaryTree {
 private:
     int max_depth;
-    Node* DaNode;
+    Node<T>* DaNode;
 
-    static void preOrderPrint(Node* boi);
+    static void preOrderPrint(Node<T>* boi);
 
 
 public:
-    double getshortest(Node*& sample);
+    T getshortest(Node<T>*& sample);
     BinaryTree();
-    BinaryTree(double _Value);
-    void insersion(double _Value);
+    BinaryTree(T _Value);
+    void insersion(T _Value);
     void preOrderVisit();
-    Node* search(double sample);
-    Node* searchparent(double sample);
-    void remove(double value);
-    Node* getRoot();
+    Node<T>* search(T sample);
+    Node<T>* searchparent(T sample);
+    void remove(T value);
+    Node<T>* getRoot();
     void printMeBreath();
-    void check_neighbour(MyQueue<Node*>& inter);
+    void check_neighbour(MyQueue<Node<T>*>& inter);
     void printMeDepthPreorder();
     void printMeInorder();
+
+
+    class iteratorBFS {
+    private:
+        Node<T>* existance;
+        MyQueue<Node<T>*> tree_;
+        void iterate_BreathFirst();
+        
+        
+
+    public:
+        iteratorBFS& operator= (Node<T>* inter)
+        {
+            tree_.push(inter);
+            existance = inter;
+            this->iterate_BreathFirst();
+            return *this;
+        }
+
+        T operator*() {
+            return existance->Value;
+        }
+
+        iteratorBFS& operator++() 
+        {
+            if(tree_.getCount() == 0)
+            {
+                cout << "end of tree" << endl;
+                return *this;
+            }
+            if (tree_.peek()->L_Next != nullptr)
+                tree_.push(tree_.peek()->L_Next);
+
+            if (tree_.peek()->R_Next != nullptr)
+                tree_.push(tree_.peek()->R_Next);
+
+            existance = tree_.peek();
+            tree_.pop();
+            return *this;
+        }
+
+    };
+
+    class iteratorDFS {
+    private:
+        Node<T>* existance;
+        Stack<Node<T>*> tree_;
+        void iterate_DepthFirst();
+
+
+    public:
+        iteratorDFS& operator= (Node<T>* inter)
+        {
+            this->existance = inter;
+            this->tree_.push(inter);
+            return *this;
+        }
+
+        T operator*() {
+            return existance->Value;
+        }
+
+        iteratorDFS& operator++()
+        {
+            if (tree_.getSize() == 0)
+            {
+                cout << "end of the tree" << endl;
+                return *this;
+            }
+            iterate_DepthFirst();
+
+            return *this;
+        }
+
+
+
+    };
 };
 
 
-Node:: Node() {
+template<class T>
+void BinaryTree<T>::iteratorBFS::iterate_BreathFirst()
+{
+
+    if (tree_.peek()->L_Next != nullptr)
+        tree_.push(tree_.peek()->L_Next);
+
+    if (tree_.peek()->R_Next != nullptr)
+        tree_.push(tree_.peek()->R_Next);
+
+    tree_.pop();
+ 
+}
+
+
+template<class T>
+void BinaryTree<T>::iteratorDFS::iterate_DepthFirst() {
+   
+    
+    Node<T>* inter = tree_.peek();
+
+    if (tree_.peek()->L_Next != nullptr)
+    {
+        tree_.push(tree_.peek()->L_Next);
+        existance = tree_.peek();
+        return;
+
+    }
+
+    inter = tree_.peek();
+    tree_.pop();
+
+    if (tree_.getSize() == 0)
+    {
+        cout << "end of tree";
+        return;
+    }
+
+    if (inter->R_Next != nullptr)
+    {
+        tree_.push(inter->R_Next);
+        existance = tree_.peek();
+        return;
+    }
+
+
+    
+
+    if (tree_.peek()->R_Next == nullptr) {
+        tree_.pop();
+        inter = tree_.peek();
+        tree_.pop();
+        tree_.push(inter->R_Next);
+        existance = tree_.peek(); 
+        return;
+    }
+    else
+    {
+        inter = tree_.peek();
+        tree_.pop();
+        tree_.push(inter->R_Next);
+        existance = tree_.peek();
+        return;
+    }
+    inter = tree_.peek();
+    tree_.pop();
+    tree_.push(inter->R_Next);
+    existance = tree_.peek();
+    return;
+
+}
+
+
+
+
+template<class T>
+Node<T>:: Node() {
     R_Next = nullptr;
     L_Next = nullptr;
     depth = 0;
     current_color = Color::Red;
 }
 
-
-
-Node:: Node(double _Value) {
+template<class T>
+Node<T>:: Node(T _Value) {
     Value = _Value;
     R_Next = nullptr;
     L_Next = nullptr;
@@ -61,16 +215,17 @@ Node:: Node(double _Value) {
 
 
 
-double BinaryTree::getshortest(Node*& sample)
+template<class T>
+T BinaryTree<T>::getshortest(Node<T>*& sample)
 {
-    double temp1;
+    T temp1;
 
     if (sample->L_Next == nullptr) {
         temp1 = sample->Value;
         delete sample;
         return temp1;
     }
-    Node* temp = nullptr;
+    Node<T>* temp = nullptr;
 
     while (sample->L_Next->L_Next != nullptr)
     {
@@ -88,10 +243,10 @@ double BinaryTree::getshortest(Node*& sample)
 }
 
 
-
-void BinaryTree::remove(double value)
+template<class T>
+void BinaryTree<T>::remove(T value)
 {
-    Node* temp = this->DaNode;
+    Node<T>* temp = this->DaNode;
 
 
     temp = search(value);
@@ -140,10 +295,10 @@ void BinaryTree::remove(double value)
 }
 
 
-
-Node* BinaryTree::searchparent(double sample) {
-    Node* inter;
-    Node* parent_iter;
+template<class T>
+Node<T>* BinaryTree<T>::searchparent(T sample) {
+    Node<T>* inter;
+    Node<T>* parent_iter;
     inter = DaNode;
     while (1) {
         parent_iter = inter;
@@ -169,10 +324,10 @@ Node* BinaryTree::searchparent(double sample) {
 }
 
 
-
-Node* BinaryTree::search(double sample) {
-    Node* inter;
-    Node* edge_case;
+template<class T>
+Node<T>* BinaryTree<T>::search(T sample) {
+    Node<T>* inter;
+    Node<T>* edge_case;
     inter = DaNode;
     edge_case = DaNode;
     while (1) {
@@ -204,27 +359,27 @@ Node* BinaryTree::search(double sample) {
 }
 
 
-
-BinaryTree::BinaryTree() {
+template<class T>
+BinaryTree<T>::BinaryTree() {
     DaNode = nullptr;
     max_depth = 0;
 }
 
 
-
-BinaryTree::BinaryTree(double _Value) {
+template<class T>
+BinaryTree<T>::BinaryTree(T _Value) {
     max_depth = 0;
-    DaNode = new Node(_Value);
+    DaNode = new Node<T>(_Value);
 }
 
 
-
-void BinaryTree::insersion(double _Value)
+template<class T>
+void BinaryTree<T>::insersion(T _Value)
 {
     //there are only a few cases where you can insert a new node
     //just make this new Node (first order of business)
-    Node* new_boi = new Node(_Value);
-    Node* inter;
+    Node<T>* new_boi = new Node<T>(_Value);
+    Node<T>* inter;
     inter = this->DaNode;
     // 1) if there is no root
     if (inter == nullptr)
@@ -276,14 +431,14 @@ void BinaryTree::insersion(double _Value)
 }
 
 
-
-void BinaryTree::preOrderVisit() {
+template<class T>
+void BinaryTree<T>::preOrderVisit() {
     BinaryTree::preOrderPrint(DaNode);
 }
 
 
-
-void BinaryTree::preOrderPrint(Node* boi) {
+template<class T>
+void BinaryTree<T>::preOrderPrint(Node<T>* boi) {
 
     if (boi == nullptr)
     {
@@ -296,15 +451,15 @@ void BinaryTree::preOrderPrint(Node* boi) {
 }
 
 
-
-Node* BinaryTree:: getRoot() {
+template<class T>
+Node<T>* BinaryTree<T>:: getRoot() {
     return this->DaNode;
 }
 
 
-
-void BinaryTree::printMeBreath() {
-    MyQueue<Node*> ohkay;
+template<class T>
+void BinaryTree<T>::printMeBreath() {
+    MyQueue<Node<T>*> ohkay;
     ohkay.push(this->DaNode);
     while (ohkay.getCount())
     {
@@ -317,8 +472,8 @@ void BinaryTree::printMeBreath() {
 }
 
 
-
-void BinaryTree::check_neighbour(MyQueue<Node*>& inter) {
+template<class T>
+void BinaryTree<T>::check_neighbour(MyQueue<Node<T>*>& inter) {
     if (inter.peek()->L_Next != nullptr)
         inter.push(inter.peek()->L_Next);
 
@@ -329,16 +484,16 @@ void BinaryTree::check_neighbour(MyQueue<Node*>& inter) {
 }
 
 
-
-void BinaryTree::printMeDepthPreorder() {
-    Stack<Node*> stack(this->DaNode);
+template<class T>
+void BinaryTree<T>::printMeDepthPreorder() {
+    Stack<Node<T>*> stack(this->DaNode);
 
     cout << endl;
 
     while (stack.getSize())
     {
 
-        Node* inter = stack.peek();
+        Node<T>* inter = stack.peek();
         cout << inter->Value << endl;
         stack.pop();
 
@@ -356,11 +511,11 @@ void BinaryTree::printMeDepthPreorder() {
 }
 
 
-
-void BinaryTree::printMeInorder() {
-    Stack<Node*> stack(this->DaNode);
+template<class T>
+void BinaryTree<T>::printMeInorder() {
+    Stack<Node<T>*> stack(this->DaNode);
     cout << endl;
-    Node* inter = stack.peek();
+    Node<T>* inter = stack.peek();
     while (stack.getSize())
     {
         if (stack.peek()->L_Next != nullptr)

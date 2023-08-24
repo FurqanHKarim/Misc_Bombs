@@ -2,7 +2,8 @@
 #include "BinaryTree.h"
 using namespace std;
 
-void printstack(Stack<Node*>& hello) {
+template<class T>
+void printstack(Stack<Node<T>*>& hello) {
     Stack<Node*> wut(hello);
     cout << "printing stack :";
     while (wut.getSize()) {
@@ -19,7 +20,7 @@ void printstack(Stack<Node*>& hello) {
 
 int main() {
   
-    BinaryTree hello(4);
+    BinaryTree<double> hello(4);
     hello.insersion(2);
     hello.insersion(6);
     hello.insersion(5);
@@ -36,6 +37,14 @@ int main() {
     hello.printMeDepthPreorder();
     hello.printMeInorder();
 
+    BinaryTree<double>::iteratorDFS wut;
+    wut = hello.getRoot();
+    for (size_t i = 0; i < 12; i++)
+    {
+        cout<<*wut<<" ";
+        ++wut;
+
+    }
     cout << "Done :  " << endl;
 
 
