@@ -16,54 +16,54 @@ int main() {
 	
 
 	
-	hello.connectNode(node_ptr1);
-	hello.connectNode(node_ptr2);
-	hello.connectNode(node_ptr3);
-	hello.connectNode(node_ptr4);
-	hello.connectNode(node_ptr5);
-	hello.connectNode(node_ptr6);
-	hello.connectNode(node_ptr8);
+	hello.connectNode(node_ptr1,1);
+	hello.connectNode(node_ptr2,1);
+	hello.connectNode(node_ptr3, 1);
+	hello.connectNode(node_ptr4, 1);
+	hello.connectNode(node_ptr5, 1);
+	hello.connectNode(node_ptr6, 1);
+	hello.connectNode(node_ptr8, 1);
 
-	node_ptr1->connectNode(node_ptr7);
-	node_ptr1->connectNode(node_ptr3);
-	node_ptr1->connectNode(node_ptr4);
-	node_ptr1->connectNode(hello.returnRoot());
+	node_ptr1->connectNode(node_ptr7, 1);
+	node_ptr1->connectNode(node_ptr3, 1);
+	node_ptr1->connectNode(node_ptr4, 1);
+	node_ptr1->connectNode(hello.returnRoot(), 1);
 
 
-	node_ptr2->connectNode(node_ptr4);
-	node_ptr2->connectNode(node_ptr5);
-	node_ptr2->connectNode(node_ptr6);
-	node_ptr2->connectNode(hello.returnRoot());
+	node_ptr2->connectNode(node_ptr4, 1);
+	node_ptr2->connectNode(node_ptr5, 1);
+	node_ptr2->connectNode(hello.returnRoot(), 1);
 
-	node_ptr3->connectNode(node_ptr1);
-	node_ptr3->connectNode(node_ptr8);
-	node_ptr3->connectNode(node_ptr7);
-	node_ptr3->connectNode(hello.returnRoot());
+	node_ptr3->connectNode(node_ptr1, 1);
+	node_ptr3->connectNode(node_ptr8, 1);
+	node_ptr3->connectNode(node_ptr7, 1);
+	node_ptr3->connectNode(hello.returnRoot(), 1);
 
-	node_ptr4->connectNode(node_ptr1);
-	node_ptr4->connectNode(node_ptr2);
-	node_ptr4->connectNode(hello.returnRoot());
+	node_ptr4->connectNode(node_ptr1, 1);
+	node_ptr4->connectNode(node_ptr2, 1);
+	node_ptr4->connectNode(hello.returnRoot(), 1);
 
-	node_ptr5->connectNode(node_ptr6);
-	node_ptr5->connectNode(node_ptr8);
-	node_ptr5->connectNode(hello.returnRoot());
+	node_ptr5->connectNode(node_ptr6, 1);
+	node_ptr5->connectNode(node_ptr8, 1);
+	node_ptr5->connectNode(hello.returnRoot(), 1);
 
-	node_ptr6->connectNode(node_ptr5);
-	node_ptr6->connectNode(node_ptr2);
-	node_ptr6->connectNode(hello.returnRoot());
+	node_ptr6->connectNode(node_ptr5, 1);
+	node_ptr6->connectNode(node_ptr8, 1);
+	node_ptr6->connectNode(hello.returnRoot(), 1);
 
-	node_ptr7->connectNode(node_ptr1);
-	node_ptr7->connectNode(node_ptr3);
-	node_ptr7->connectNode(node_ptr8);
+	node_ptr7->connectNode(node_ptr1, 1);
+	node_ptr7->connectNode(node_ptr3, 1);
+	node_ptr7->connectNode(node_ptr8, 1);
 
-	node_ptr8->connectNode(node_ptr7);
-	node_ptr8->connectNode(node_ptr3);
-	node_ptr8->connectNode(node_ptr5);
-	node_ptr8->connectNode(hello.returnRoot());
+	node_ptr8->connectNode(node_ptr7, 1);
+	node_ptr8->connectNode(node_ptr3, 1);
+	node_ptr8->connectNode(node_ptr5, 1);
+	node_ptr8->connectNode(hello.returnRoot(), 1);
 
 	hello.printDFS();
 	hello.printBFS();
-	hello.searchBFS(100);
+	hello.searchBFS(7);
+	hello.greedySearch(7);
 	cout << "Done   :" << endl;
 
 

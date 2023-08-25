@@ -18,11 +18,11 @@ struct Node {
 
 	struct Edge {
 		Node<T>* _node;
-		float _distance;
+		uint64_t _distance;
 	};
 
 	T value;
-	vector<Edge> neighbours;
+	vector<Edge> neighbours;// Contains who neighbours & dist to reach
 
 	Node();
 	
@@ -33,20 +33,49 @@ struct Node {
 	void connectNode(Node<T>* inter, int _distance_);
 
 	
-	bool checkNeighbour(Node<T>* suspect);
+	Node<T>* checkNeighbour(const T& suspect);
+	Node<T>* exctractMinimumDist();
 };
 
+template<class T>
+Node<T>* Node<T>::exctractMinimumDist() {
+	int iteration_no = 0;
+	uint64_t _distance = -1;
 
+	for (size_t i = 0; i < neighbours.size(); i++)
+	{
+		if (_distance > neighbours[i]._distance)
+		{
+			_distance = neighbours[i]._distance;
+			iteration_no = i;
+		}
+
+	}
+	return neighbours[iteration_no]._node;
+
+}
+
+template<class T>
+Node<T>* Node<T>::checkNeighbour(const T& suspect) {
+	for (size_t i = 0; i < neighbours.size(); i++)
+	{
+		if(neighbours[i]._node->value == suspect)
+		{
+			return neighbours[i]._node;
+		}
+
+	}
+	
+	return this;
+}
 
 
 
 template<class T>
 class MyGraph {
 
-
 private:
 	Node<T>* root_node_;
-
 
 
 public:
@@ -66,9 +95,41 @@ public:
 
 	
 	void searchBFS(T key);
-	
+
+	void greedySearch(T key);
+
 };
 
+
+
+template<class T>
+void MyGraph<T>:: greedySearch(T key) {
+
+	Node<T>* temp;
+	temp = root_node_;
+	vector<T> path;
+
+	while (1)
+	{
+
+		path.push_back(temp->value);
+		if (temp != temp->checkNeighbour(key))
+		{
+			cout << "Found stuff:";
+			break;
+
+		}
+		temp = temp->exctractMinimumDist();
+	}
+
+	cout << "The Path is :";
+	for (size_t i = 0; i < path.size(); i++)
+	{
+		cout << path[i] << "  ";
+	}
+	cout << endl;
+
+}
 template<class T>
 void MyGraph<T>::searchBFS(T key)
 {	
@@ -86,6 +147,18 @@ void MyGraph<T>::searchBFS(T key)
 		temp = cur_queue.front();
 		path_record.push_back(temp->value);
 		cur_queue.pop();
+
+		if (temp != temp->checkNeighbour(key))
+		{
+			for (size_t i = 0; i < path_record.size(); i++)
+			{
+				cout << path_record[i] << "  ";
+			}
+			cout << endl;
+			return;
+
+		}
+
 		for (size_t i = 0; i < temp->neighbours.size(); i++)
 		{
 			if (!visited[temp->neighbours[i]._node])
@@ -98,15 +171,6 @@ void MyGraph<T>::searchBFS(T key)
 
 		}
 
-		if (cur_queue.front()->value == key)
-		{
-			for (size_t i = 0; i < path_record.size(); i++)
-			{
-				cout << path_record[i] << "  ";
-			}
-			cout << endl;
-			return;
-		}
 	}
 
 }
@@ -168,6 +232,8 @@ void MyGraph<T>::printBFS()
 
 		}
 	}
+
+	cout << endl;
 }
 
 
@@ -239,7 +305,7 @@ void Node<T>:: connectNode(Node<T>* inter)
 }
 
 template<class T>
-void Node<T>::connectNode(Node<T>* inter, int _distance_) {
+void Node<T>:: connectNode(Node<T>* inter, int _distance_) {
 
 	Edge test;
 	test._node = inter;
