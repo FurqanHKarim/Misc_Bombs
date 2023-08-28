@@ -35,7 +35,40 @@ struct Node {
 	
 	Node<T>* checkNeighbour(const T& suspect);
 	Node<T>* exctractMinimumDist();
+	Node<T>* exctractMinimumDist(unordered_map<Node<T>*, bool> ignore);
+
 };
+
+template<class T>
+Node<T>* Node<T>::exctractMinimumDist(unordered_map<Node<T>*, bool> ignore) 
+{
+	int iteration_no = -1;
+	uint64_t _distance = -1;
+
+	for (size_t i = 0; i < neighbours.size(); i++)
+	{
+		if (ignore[neighbours[i]._node] == true)
+			continue;
+
+		if ((_distance > neighbours[i]._distance))
+		{
+			_distance = neighbours[i]._distance;
+			iteration_no = i;
+		}
+
+	}
+
+	if (iteration_no == -1)
+	{
+		return this;
+	}
+		
+	
+
+	return neighbours[iteration_no]._node;
+
+
+}
 
 template<class T>
 Node<T>* Node<T>::exctractMinimumDist() {
@@ -108,24 +141,47 @@ void MyGraph<T>:: greedySearch(T key) {
 	Node<T>* temp;
 	temp = root_node_;
 	vector<T> path;
+	unordered_map<Node<T>*, bool> check;
+	stack<Node<T>*> stack_;
+
+	temp = this->root_node_;
+	stack_.push(temp);
+	check.insert_or_assign(temp, true);
+
 
 	while (1)
 	{
 
-		path.push_back(temp->value);
 		if (temp != temp->checkNeighbour(key))
 		{
-			cout << "Found stuff:";
+			cout << "Found stuff:" << endl;
 			break;
-
 		}
-		temp = temp->exctractMinimumDist();
+
+		Node<T>* inter = temp->exctractMinimumDist(check);
+		if (temp == inter) {
+			stack_.pop();
+			temp = stack_.top();
+			continue;
+		}
+
+		temp = inter;
+		stack_.push(temp);
+		check.insert_or_assign(temp, true);
+
+
+	}
+
+	for (size_t i = stack_.size(); i > 0; i--)
+	{
+		path.push_back(stack_.top()->value);
+		stack_.pop();
 	}
 
 	cout << "The Path is :";
 	for (size_t i = 0; i < path.size(); i++)
 	{
-		cout << path[i] << "  ";
+		cout << path[path.size()-i-1] << "  ";
 	}
 	cout << endl;
 
