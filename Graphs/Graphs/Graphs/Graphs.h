@@ -183,6 +183,7 @@ void MyGraph<T>:: greedySearch(T key) {
 	{
 		cout << path[path.size()-i-1] << "  ";
 	}
+	cout << key;
 	cout << endl;
 
 }

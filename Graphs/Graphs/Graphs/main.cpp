@@ -49,7 +49,7 @@ int main() {
 	node_ptr10->connectNode(node_ptr11,1);
 	node_ptr10->connectNode(node_ptr9, 1);
 
-	node_ptr8->connectNode(node_ptr11,1);
+	//node_ptr8->connectNode(node_ptr11,1);
 	node_ptr8->connectNode(node_ptr1, 1);
 
 
@@ -121,7 +121,6 @@ int main() {
 
 
 	return 0;
-
 }
 
 
