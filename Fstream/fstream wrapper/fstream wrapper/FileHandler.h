@@ -24,11 +24,15 @@ public:
 	bool IsOpen();
 	void Write(const string& input);
 	void Write(const string& input, int where);
+	void Write(const char* input, const int& offset, const int& lenght);
+	void Write(const char* input, const int& offset, const int& lenght, const int& offset_infile);
 	void Read(string& reader_);
 	void Read(string& reader_, int where);
+	void ReadStr(char* reader_, int where);
 	void reOpen(ios_base::openmode mode);
 	void HowLong();
 	void HowLong(int dest_file_size);
+	void close();
 	int returnLenght();
 
 };

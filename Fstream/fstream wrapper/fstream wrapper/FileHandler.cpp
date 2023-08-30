@@ -65,6 +65,14 @@ void FileHandler::Read(string& reader_)
 
 }
 
+void FileHandler:: ReadStr(char* reader_, int where)
+{
+	daFile.read(reader_, where);
+
+	return;
+}
+
+
 void FileHandler::Write(const string& input, int where)
 {
 	if (!this->IsOpen())
@@ -73,6 +81,24 @@ void FileHandler::Write(const string& input, int where)
 	daFile.seekp(where);
 	daFile.write(input.c_str(), input.size());
 	HowLong();
+}
+
+void FileHandler::Write(const char* input, const int &offset,const int& lenght)
+{
+	if (!this->IsOpen())
+		return;
+
+	daFile.write(input+offset, lenght);
+	return;
+}
+
+void FileHandler::Write(const char* input, const int& offset, const int& lenght,const int& offset_infile)
+{
+	if (!this->IsOpen())
+		return;
+	daFile.seekp(offset_infile);
+	daFile.write(input + offset, lenght);
+	return;
 }
 
 void FileHandler::Write(const string& input)
@@ -113,7 +139,7 @@ bool FileHandler::IsOpen() {
 
 	if (!daFile.is_open())
 	{
-		cout << "File is not Open:";
+		cout <<file_name_ <<":   File is not Open";
 		return 0;
 	}
 
@@ -130,4 +156,8 @@ void printCompleteCharArray(const char* arr_)
 }
 
 
+void FileHandler:: close() {
+	this->daFile.clear();
+	this->daFile.close();
+}
 FileHandler::FileHandler() {}
