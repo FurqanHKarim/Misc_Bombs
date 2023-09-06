@@ -1,6 +1,17 @@
 #include"FileHandler.h"
 
 
+void FileHandler:: seeker(int location)
+{
+	this->daFile.seekg(location);
+	location_ = daFile.tellg();
+	return;
+}
+
+int FileHandler:: teller() 
+{
+	return this->daFile.tellp();
+}
 void FileHandler:: reOpen(ios_base::openmode mode)
 {
 	daFile.close();
@@ -21,9 +32,11 @@ void FileHandler::HowLong()
 	if (!this->IsOpen())
 		return;
 
+	location_ = daFile.tellg();
 	daFile.seekg(0,daFile.end);
 	this->file_lenght_ = daFile.tellg();
-	daFile.seekg(0, daFile.beg);
+	daFile.seekg(location_);
+
 	return ;
 
 }
@@ -44,6 +57,7 @@ void FileHandler::Read(string& reader_, int where)
 	daFile.seekg(where);
 	reader_.clear();
 	getline(daFile, reader_);
+	HowLong();
 	return;
 
 }
@@ -61,17 +75,30 @@ void FileHandler::Read(string& reader_)
 		cout << "Reached File end" << endl;
 		daFile.clear();
 	}
+	HowLong();
 	return;
 
 }
 
-void FileHandler:: ReadStr(char* reader_, int where)
+void FileHandler:: ReadStr(char* reader_, int lenght)
 {
-	daFile.read(reader_, where);
+	daFile.read(reader_, lenght);
+
+	return;
+	HowLong();
+
+}
+
+void FileHandler:: Write(const char* input, const int& lenght)
+{
+	if (!this->IsOpen())
+		return;
+
+	daFile.write(input, lenght);
+	HowLong();
 
 	return;
 }
-
 
 void FileHandler::Write(const string& input, int where)
 {
@@ -89,6 +116,8 @@ void FileHandler::Write(const char* input, const int &offset,const int& lenght)
 		return;
 
 	daFile.write(input+offset, lenght);
+	HowLong();
+
 	return;
 }
 
@@ -98,6 +127,8 @@ void FileHandler::Write(const char* input, const int& offset, const int& lenght,
 		return;
 	daFile.seekp(offset_infile);
 	daFile.write(input + offset, lenght);
+	HowLong();
+
 	return;
 }
 
@@ -118,8 +149,16 @@ bool FileHandler::Open(const string& file_name, ios_base::openmode mode) {
 	this->file_name_ = file_name;
 	daFile.open(file_name_, mode);
 	if (!this->IsOpen())
+	{
+		if ((mode & ios::app) != ios::app)
+		{
+			daFile.open(file_name_, ios::app);
+			daFile.close();
+			daFile.open(file_name_, ios::in|ios::out);
+			cout << file_name << ":   File didn't exist, File created" << endl;
+		}
 		return 0;
-
+	}
 	return 1;
 }
 
@@ -139,7 +178,7 @@ bool FileHandler::IsOpen() {
 
 	if (!daFile.is_open())
 	{
-		cout <<file_name_ <<":   File is not Open";
+		cout << file_name_ << ":   File is not Open" << endl;
 		return 0;
 	}
 
