@@ -50,20 +50,26 @@ void BigFile::bigRead(char* _arr, int lenght_of_arr)
 	int files = lenght_of_arr / (1 << 17);
 	end_limit = lenght_of_arr - files * (1 << 17);
 
+	int file_offset = 0;
+	int in_file_offset = 0;
 
+	file_offset = current_location_ / (1 << 17);
+	in_file_offset = current_location_ % (1 << 17);
 	for (int i = 0; i < files; i++)
 	{
-		offset = i * (1 << 17);
 
 		if ((i == files - 1) && (end_limit > 0))
 		{
-			grand_file_[i].ReadStr(_arr + offset, end_limit);
+			grand_file_[i + file_offset].ReadStr(_arr + offset, end_limit);
 			continue;
 		}
-
-		grand_file_[i].ReadStr(_arr + offset, 1 << 17);
+		grand_file_[i + file_offset].seeker(in_file_offset);
+		grand_file_[i + file_offset].ReadStr(_arr + offset, 1 << 17);
+		offset += (1 << 17) - in_file_offset;
+		in_file_offset = 0;
+		grand_file_[i + file_offset].seeker(0);
 	}
-
+	current_location_ += lenght_of_arr;
 }
 
 
