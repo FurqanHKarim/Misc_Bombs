@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BigFile.cpp" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

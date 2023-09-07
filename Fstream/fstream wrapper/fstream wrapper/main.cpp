@@ -21,7 +21,7 @@ int main1() {
 	//bruno.bigWrite(korg, 1 << 20);
 	//bruno.close();
 	BigFile brunoJr("File", 1);
-	brunoJr.bigWriteAnywhere("hell with this prob\n\n\n", 22, 150000);
+	brunoJr.bigWriteAnywhere("hell with this prob\n\n\n", 22);
 
 	brunoJr.bigRead(korgJr, 1 << 20);
 	for (size_t i = 0; i < 1<<20; i++)
@@ -44,7 +44,8 @@ int main() {
 	char* wut = new char[(1 << 17)*2];
 	fill(wut, wut + (1 << 17) *2, 'K');
 	BigFile brutus("File", 1);
-	brutus.bigWriteAnywhere(wut, (1 << 17) *2,(1<<17)-500);
+	brutus.bigSeek((1 << 17) - 500);
+	brutus.bigWriteAnywhere(wut, (1 << 17) *2);
 
 	return 0;
 
