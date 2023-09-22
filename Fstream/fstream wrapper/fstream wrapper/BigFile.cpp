@@ -17,7 +17,7 @@ BigFile:: BigFile(const string& _filename_, const double& file_size_in_Mb)
 
 	current_location_ = 0;
 	populate_em(_filename_);
-
+	
 
 }
 

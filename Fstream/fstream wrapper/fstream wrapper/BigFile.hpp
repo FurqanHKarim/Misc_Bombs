@@ -14,7 +14,7 @@ private:
 
 public:
 	BigFile();
-
+	
 	BigFile(const string& _filename_, const double& file_size_in_Mb);
 	
 	void close();
