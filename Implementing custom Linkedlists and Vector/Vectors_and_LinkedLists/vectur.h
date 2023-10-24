@@ -64,7 +64,7 @@ vectur<T>& vectur<T>::operator= (const vectur<T>& B) {
 
 template<class T>
 vectur<T>::vectur(vectur<T>& B) {
-    delete this->array;
+//    delete this->array;
     this->array = new T[B.capacity];
     this->capacity = B.capacity;
     this->size = B.size;

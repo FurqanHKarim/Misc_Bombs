@@ -79,7 +79,7 @@ int main() {
 	fstream Dafile("hello.txt", ios::in|ios::out|ios::trunc);
 	input = new char[90];
 	cout << "Let the games begin:   ";
-	cin.getline(input,90,'\n');
+	cin.getline(input,90);
 	//strcat(input, "\n");
 	int a = check_end(input, 90);
 	Dafile.write(input, a);

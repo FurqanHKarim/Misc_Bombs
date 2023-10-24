@@ -31,7 +31,18 @@
 *.out
 *.app
 
+File0.txt
+File1.txt
+File2.txt
+File3.txt
+File4.txt
+File5.txt
+File6.txt
+File7.txt
+test.txt
+hello.txt
+
 .vscode
 .vs
 x64
-*.txt
+build
